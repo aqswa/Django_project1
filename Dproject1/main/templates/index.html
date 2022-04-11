@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>이개커</title>
+</head>
+<body>
+    <header>
+        <div class="logo"></div>
+        <div class="site_dscrpt"></div>
+        <div class="login"></div>
+    </header>
+    <div class="main">
+        <div class="nav">
+
+        </div>
+        <div class="rank_postings">
+            {%for post in posts %}
+                <li><a href="{%url 'detail' pk=post.id %}">{{post.title}}</a>
+                    <span>{{post.upload_time}}</span></li>
+            {%endfor%}
+        </div>
+    </div>
+</body>
+</html>
