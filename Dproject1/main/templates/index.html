@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    {%load static%}
+    <link rel = "stylesheet" href="{%static '/css/style.css'%}">
     <title>이개커</title>
 </head>
 <body>
@@ -12,7 +14,15 @@
     </header>
     <div class="main">
         <div class="nav">
-
+            <ul>
+                <li>질문게시판</li>
+                <li>링크 공유 게시판</li>
+                <li>취업 정보 게시판</li>
+                <li>뉴스레터 게시판</li>
+            </ul>
+        </div>
+        <div class="post_new">
+            <a href="/create/">게시글 작성</a>
         </div>
         <div class="rank_postings">
             {%for post in posts %}

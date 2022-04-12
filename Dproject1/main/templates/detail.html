@@ -4,5 +4,8 @@
         <br>
         <span>{{post.upload_time}}</span>
         <div class="content">{{post.contents}}</div>
+        <a href="{%url 'update' pk=post.id%}">Update</a>
+        <a href="{%url 'delete' pk=post.id %}">Delete</a>
+        <a href="{%url 'index'%}">목록</a>
     </div>
 </body>
