@@ -8,28 +8,31 @@
 </head>
 <body>
     <header>
-        <div class="logo"></div>
+        <div class="logo"><img src="/static/images/logo.png"></div>
         <div class="site_dscrpt"></div>
-        <div class="login"></div>
+        <div class="login">
+            <a href="{%url 'common:login'%}">로그인</a>
+        </div>
     </header>
     <div class="main">
         <div class="nav">
-            <ul>
-                <li>질문게시판</li>
-                <li>링크 공유 게시판</li>
-                <li>취업 정보 게시판</li>
-                <li>뉴스레터 게시판</li>
-            </ul>
+            <li class="board-1">질문게시판</li>
+            <li class="board-1">링크 공유 게시판</li>
+            <li class="board-1">취업 정보 게시판</li>
+            <li class="board-1">뉴스레터 게시판</li>
         </div>
-        <div class="post_new">
-            <a href="/create/">게시글 작성</a>
-        </div>
-        <div class="rank_postings">
-            {%for post in posts %}
-                <li><a href="{%url 'detail' pk=post.id %}">{{post.title}}</a>
-                    <span>{{post.upload_time}}</span></li>
-            {%endfor%}
+        <div class="post">
+            <div class="post_new">
+                <a href="/create/">게시글 작성</a>
+            </div>
+            <div class="post_in_rank">
+                {%for post in posts %}
+                    <li class="post_detail"><a class="post_title" href="{%url 'detail' pk=post.id %}">{{post.title}}</a>
+                    </br><span class="upload_time">{{post.upload_time}}</span></li>
+                {%endfor%}
+            </div>
         </div>
     </div>
+
 </body>
 </html>
