@@ -4,8 +4,40 @@
         <br>
         <span>{{post.upload_time}}</span>
         <div class="content">{{post.contents}}</div>
+        {%if user == post.user%}
         <a href="{%url 'update' pk=post.id%}">Update</a>
         <a href="{%url 'delete' pk=post.id %}">Delete</a>
+        {%endif%}
         <a href="{%url 'index'%}">목록</a>
+    </div>
+    <hr>
+    <div>
+        {%if post.comments%}
+        <p><b>{{post.comments.all|length}}개의 댓글이 있습니다</b></p>
+        {%endif%}
+        <ul>
+            {%for comment in post.comments.all%}
+            <li>
+                {{comment.user}} - {{comment.comment_text}}
+                {%if user == comment.user%}
+                    <a href="{%url 'comment_delete' post.pk comment.pk%}" method="POST">삭제</a>
+                {%endif%}
+            </li>
+            {%empty%}
+            <p>댓글이 없습니다</p>
+            {%endfor%}
+        </ul>
+    </div>
+    <div>
+        {%if request.user.is_authenticated%}
+            <form action="{%url 'comment_create' post.pk%}" method="POST">
+                {%csrf_token%}
+                {{comment_form}}
+                <input type="submit">
+            </form>
+        {%else%} 
+            <a href="{%url 'common:login'%}">댓글을 작성하려면 로그인하세요.</a>
+        {%endif%}
+        
     </div>
 </body>

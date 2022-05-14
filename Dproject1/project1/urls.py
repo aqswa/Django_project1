@@ -15,14 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from main.views import index, detail, create, delete, update
+from main import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index, name="index"),
-    path('<int:pk>', detail, name="detail"),
-    path('create/', create, name="create"),
-    path('<int:pk>/delete', delete, name="delete"),
-    path('<int:pk>/update', update, name="update"),
+    path('', views.index, name="index"),
+    path('<int:pk>', views.detail, name="detail"),
+    path('create/', views.create, name="create"),
+    path('<int:pk>/delete', views.delete, name="delete"),
+    path('<int:pk>/update', views.update, name="update"),
+    path('<int:pk>/comment', views.comment_create, name="comment_create"),
+    path('<int:post_pk>/comment/<int:comment_pk>/delete',
+         views.comment_delete, name="comment_delete"),
     path('common/', include('common.urls')),
 ]
