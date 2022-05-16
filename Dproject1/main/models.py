@@ -8,6 +8,8 @@ from django.conf import settings
 class Post(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE, default="", null=True)
+    like_users = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, related_name='like_post')
     title = models.CharField(max_length=100)
     upload_time = models.DateTimeField(default=timezone.now)
     contents = models.TextField()
