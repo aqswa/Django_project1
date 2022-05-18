@@ -1,15 +1,23 @@
+from time import time
 from django.shortcuts import get_object_or_404, render, redirect, HttpResponseRedirect
 from django.utils import timezone
 
 # Create your views here.
-from main.models import Post, Comment
+from main.models import Post, Comment, Category
 from .forms import CommentForm, postForm
 
 
 def index(request):
     posts = Post.objects.filter(
         upload_time__lte=timezone.now()).order_by('upload_time')
-    return render(request, 'index.html', {'posts': posts})
+    cats = Category.objects.all()
+    return render(request, 'index.html', {'posts': posts, 'cats': cats})
+
+
+def categoryIndex(request, cats):
+    category_posts = Post.objects.filter(category__name=cats).filter(
+        upload_time__lte=timezone.now()).order_by('upload_time')
+    return render(request, 'category_index.html', {'category_posts': category_posts})
 
 
 def detail(request, pk):

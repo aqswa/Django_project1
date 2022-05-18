@@ -20,6 +20,7 @@ from main import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name="index"),
+    path('category/<str:cats>', views.categoryIndex, name="category_index"),
     path('<int:pk>', views.detail, name="detail"),
     path('create/', views.create, name="create"),
     path('<int:pk>/delete', views.delete, name="delete"),
@@ -27,6 +28,6 @@ urlpatterns = [
     path('<int:pk>/comment', views.comment_create, name="comment_create"),
     path('<int:post_pk>/comment/<int:comment_pk>/delete',
          views.comment_delete, name="comment_delete"),
-    path('common/', include('common.urls')),
     path('<int:post_pk>/like/', views.like, name="like"),
+    path('common/', include('common.urls')),
 ]

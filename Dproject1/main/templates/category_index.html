@@ -1,0 +1,6 @@
+<div class="post_in_rank">
+    {%for post in category_posts %}
+        <li class="post_detail"><a class="post_title" href="{%url 'detail' pk=post.id %}">{{post.title}}</a>
+        </br><span class="upload_time">{{post.upload_time}}</span></li>
+    {%endfor%}
+</div>

@@ -18,10 +18,10 @@
     </header>
     <div class="main">
         <div class="nav">
-            <li class="board-1">질문게시판</li>
-            <li class="board-1">링크 공유 게시판</li>
-            <li class="board-1">취업 정보 게시판</li>
-            <li class="board-1">뉴스레터 게시판</li>
+            <li class="board-1"><a href="{%url 'index'%}">전체게시판</a></li>
+            {%for item in cats%}
+            <li class="board-1"><a href="{%url 'category_index' item.name%}">{{item.name}} 게시판</a></li>
+            {%endfor%}
         </div>
         <div class="post">
             <div class="post_new">

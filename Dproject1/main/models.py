@@ -5,9 +5,22 @@ from django.conf import settings
 # Create your models here.
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=255)
+
+    class Meta:
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
+
+    def __str__(self):
+        return self.name
+
+
 class Post(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE, default="", null=True)
+    category = models.ForeignKey(
+        Category, on_delete=models.CASCADE, default="", null=True)
     like_users = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name='like_post')
     title = models.CharField(max_length=100)
