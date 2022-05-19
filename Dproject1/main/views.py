@@ -1,6 +1,6 @@
-from time import time
 from django.shortcuts import get_object_or_404, render, redirect, HttpResponseRedirect
 from django.utils import timezone
+from django.core.paginator import Paginator
 
 # Create your views here.
 from main.models import Post, Comment, Category
@@ -8,16 +8,26 @@ from .forms import CommentForm, postForm
 
 
 def index(request):
-    posts = Post.objects.filter(
-        upload_time__lte=timezone.now()).order_by('upload_time')
-    cats = Category.objects.all()
-    return render(request, 'index.html', {'posts': posts, 'cats': cats})
+    # posts = Post.objects.filter(
+    # upload_time__lte=timezone.now()).order_by('upload_time')
+    cate_list = Category.objects.all()
+    post_list = Post.objects.order_by('-upload_time')
+    paginator = Paginator(post_list, 6)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'index.html', {'page_obj': page_obj, 'cate_list': cate_list})
 
 
 def categoryIndex(request, cats):
+    cate_list = Category.objects.all()
     category_posts = Post.objects.filter(category__name=cats).filter(
-        upload_time__lte=timezone.now()).order_by('upload_time')
-    return render(request, 'category_index.html', {'category_posts': category_posts})
+        upload_time__lte=timezone.now()).order_by('-upload_time')
+    paginator = Paginator(category_posts, 6)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'category_index.html', {'cate_list': cate_list, 'page_obj': page_obj})
 
 
 def detail(request, pk):
@@ -63,7 +73,7 @@ def update(request, pk):
         else:
             form = postForm(instance=post)
     else:
-        return redirect('index')
+        return redirect('detail', post.pk)
 
     context = {
         'form': form,

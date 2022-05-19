@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {%load static%}
+    <link rel = "stylesheet" href="{%static '/css/style.css'%}">
+    <title>이개커</title>
+</head>
+<body>
+    <header>
+        <div class="logo"><img src="/static/images/logo.png"></div>
+        <div class="site_dscrpt"></div>
+        <div class="login">
+            <a href="{%url 'common:login'%}">로그인</a>
+            <a href="{%url 'common:logout'%}">로그아웃</a>
+            <a href="{%url 'common:signup'%}">회원가입</a>
+        </div>
+    </header>
+    <div class="main">
+        <div class="nav">
+            <li class="board-1"><a href="{%url 'index'%}">전체게시판</a></li>
+            {%for item in cate_list%}
+            <li class="board-1"><a href="{%url 'category_index' item.name%}">{{item.name}} 게시판</a></li>
+            {%endfor%}
+        </div>
+        <div class="post">
+            <div class="post_new">
+                {%if request.user.is_authenticated%}
+                    <a href="{%url 'create'%}">게시글 작성</a>
+                {%else%} 
+                    <a href="{%url 'common:login'%}">게시글을 작성하려면 로그인하세요.</a>
+                {%endif%}
+            </div>
+            {%block content%}
+            {%endblock%}
+            <div>
+                {%if page_obj.has_previous%}
+                    <a href="?page={{page_obj.number|add:-1}}">Previous</a>
+                {%endif%}
+                Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}
+                {%if page_obj.has_next%} 
+                    <a href="?page={{page_obj.number|add:+1}}">Next</a>
+                {%endif%}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
